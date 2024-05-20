@@ -16,29 +16,29 @@ COLUMN *create_column(char* titre) {
     return col;
 }
 
-int insert_value(COLUMN* col, int value){
+void insert_value(COLUMN* col, int value){
+
     if (col->taille_physique >= col->taille_logique)
     {
         col->taille_logique += 256;
-        col->valeurs = realloc(col->valeurs,256);
+        col->valeurs = realloc(col->valeurs,256 * sizeof(int));
     }
     col->valeurs[col->taille_physique] = value;
     col->taille_physique++;
 }
 
-void delete_column(COLUMN **col) {
-    if (col && *col) {
-        if ((*col)->valeurs) {
-            free((*col)->valeurs);
-            (*col)->valeurs = NULL;
-        }
-        free(*col);
-        *col = NULL;
+void delete_column(COLUMN *col) {
+
+    if (col->valeurs) {
+        free(col->valeurs);
+        col->valeurs = NULL;
+
+        free(col);
+        col = NULL;
     }
 }
 
 void print_col(COLUMN* col){
-    int i = 0;
     for (i=0; i<col->taille_physique; i++)
     {
         printf("[%d] %d\n",i,col->valeurs[i]);
@@ -48,7 +48,6 @@ void print_col(COLUMN* col){
 
 int nbr_occu(COLUMN* col, int val){
     int count = 0;
-    int i = 0;
     for (i=0; i<col->taille_physique; i++)
     {
         if (col->valeurs[i] == val)
@@ -56,10 +55,10 @@ int nbr_occu(COLUMN* col, int val){
             count ++;
         }
     }
-    printf("le nbr d'occu de %d est %d\n",val,count);
+    return count;
 }
 
-int position(COLUMN* col, int x){
+void position(COLUMN* col, int x){
     if (x > 0 && x <= col->taille_physique)
     {
         printf("la valeur presente a la position %d est %d\n",x,col->valeurs[x-1]);
@@ -70,9 +69,8 @@ int position(COLUMN* col, int x){
     }
 }
 
-int nbr_sup(COLUMN* col, int val){
+void nbr_sup(COLUMN* col, int val){
     int count = 0;
-    int i = 0;
     for (i=0; i<col->taille_physique; i++)
     {
         if (col->valeurs[i] > val)
@@ -83,9 +81,8 @@ int nbr_sup(COLUMN* col, int val){
     printf("le nbr de valeurs superieures a %d est de %d\n",val,count);
 }
 
-int nbr_inf(COLUMN* col, int val){
+void nbr_inf(COLUMN* col, int val){
     int count = 0;
-    int i = 0;
     for (i=0; i<col->taille_physique; i++)
     {
         if (col->valeurs[i] < val)
