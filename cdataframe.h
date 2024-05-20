@@ -6,13 +6,16 @@
 #include <string.h>
 
 typedef struct {
-    char* tab_titre;
-    int* tab_val;
+    COLUMN **tab_val;
     int taille_physique;
     int taille_logique;
+
 } CDATAFRAME;
 
-int nbr = 0;
-char titre;
+int temp = 0;
+int nbr;
 int i;
+int j;
 int val;
+int max_nbr = 0;
+char new_line[100];
