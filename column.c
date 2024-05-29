@@ -21,7 +21,7 @@ void insert_value(COLUMN* col, int value){     // fonction qui va insérer une v
     if (col->taille_physique >= col->taille_logique)
     {
         col->taille_logique += 256;
-        col->valeurs = realloc(col->valeurs,256 * sizeof(int));
+        col->valeurs = realloc(col->valeurs,256 * sizeof(int)); // dans le cas ou la taille physique est insuffisante on réalloue de la mémoire 
     }
     col->valeurs[col->taille_physique] = value;
     col->taille_physique++;
@@ -30,8 +30,8 @@ void insert_value(COLUMN* col, int value){     // fonction qui va insérer une v
 void delete_column(COLUMN *col) {                // fonction qui va permettre de supprimer une colonne et de supprimer les valeurs de la mémoire
 
     if (col->valeurs) {
-        free(col->valeurs);
-        col->valeurs = NULL;
+        free(col->valeurs);                      
+        col->valeurs = NULL;                    // après avoir libéré l'espace occupé par les valeurs précédentes on associe NULL aux valeurs pour éviter des valeurs aléatoires
 
         free(col);
         col = NULL;
