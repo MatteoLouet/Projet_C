@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 
-COLUMN *create_column(char* titre) {
+COLUMN *create_column(char* titre) {           // fonction qui va prendre un titre en paramètre et renvoyer une colonne associée
     COLUMN *col = malloc(sizeof(COLUMN));
     col->titre = titre;
     col->valeurs = NULL;
@@ -16,7 +16,7 @@ COLUMN *create_column(char* titre) {
     return col;
 }
 
-void insert_value(COLUMN* col, int value){
+void insert_value(COLUMN* col, int value){     // fonction qui va insérer une valeur dans la colonne 
 
     if (col->taille_physique >= col->taille_logique)
     {
@@ -27,7 +27,7 @@ void insert_value(COLUMN* col, int value){
     col->taille_physique++;
 }
 
-void delete_column(COLUMN *col) {
+void delete_column(COLUMN *col) {                // fonction qui va permettre de supprimer une colonne et de supprimer les valeurs de la mémoire
 
     if (col->valeurs) {
         free(col->valeurs);
@@ -38,7 +38,7 @@ void delete_column(COLUMN *col) {
     }
 }
 
-void print_col(COLUMN* col){
+void print_col(COLUMN* col){                    // fonction qui servira à afficher les colonnes 
     for (i=0; i<col->taille_physique; i++)
     {
         printf("[%d] %d\n",i,col->valeurs[i]);
@@ -46,7 +46,7 @@ void print_col(COLUMN* col){
 }
 
 
-int nbr_occu(COLUMN* col, int val){
+int nbr_occu(COLUMN* col, int val){            // fonction qui va renvoyer le nombre d'occurence d'une valeur dans la colonne 
     int count = 0;
     for (i=0; i<col->taille_physique; i++)
     {
@@ -58,7 +58,7 @@ int nbr_occu(COLUMN* col, int val){
     return count;
 }
 
-void position(COLUMN* col, int x){
+void position(COLUMN* col, int x){            // return la position d'une valeur entrée en paramètre 
     if (x > 0 && x <= col->taille_physique)
     {
         printf("la valeur presente a la position %d est %d\n",x,col->valeurs[x-1]);
@@ -69,7 +69,7 @@ void position(COLUMN* col, int x){
     }
 }
 
-void nbr_sup(COLUMN* col, int val){
+void nbr_sup(COLUMN* col, int val){                    // renvoie le nombre de valeurs supéieure à une valeur "val" entrée en paramètre 
     int count = 0;
     for (i=0; i<col->taille_physique; i++)
     {
@@ -81,7 +81,7 @@ void nbr_sup(COLUMN* col, int val){
     printf("le nbr de valeurs superieures a %d est de %d\n",val,count);
 }
 
-void nbr_inf(COLUMN* col, int val){
+void nbr_inf(COLUMN* col, int val){                    // meme chose avec les nombres inférieurs 
     int count = 0;
     for (i=0; i<col->taille_physique; i++)
     {
